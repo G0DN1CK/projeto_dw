@@ -37,41 +37,61 @@ O pipeline de dados foi implementado em Python utilizando as bibliotecas `pandas
 
 O Data Warehouse foi modelado utilizando o padrão dimensional:
 
-### Tabela Fato
 
-**fato_transacao**
+Se quiser uma versão ainda mais simples, em ASCII, para caso o Mermaid não renderize no seu README, use esta:
 
-* id_transacao
-* id_data
-* id_titular
-* id_categoria
-* id_estabelecimento
-* valor_brl
-* valor_usd
-* cotacao
-* parcela_texto
-* num_parcela
-* total_parcelas
+```markdown
+## Modelagem – Star Schema
 
-### Tabelas Dimensão
+```text
+                    +----------------------+
+                    |       dim_data       |
+                    +----------------------+
+                    | id_data (PK)         |
+                    | data                 |
+                    | dia                  |
+                    | mes                  |
+                    | ano                  |
+                    | trimestre            |
+                    | dia_semana           |
+                    +----------------------+
+                               |
+                               |
+                               |
++----------------------+       |       +----------------------+
+|    dim_titular       |       |       |    dim_categoria     |
++----------------------+       |       +----------------------+
+| id_titular (PK)      |       |       | id_categoria (PK)    |
+| nome_titular         |       |       | nome_categoria       |
+| final_cartao         |       |       +----------------------+
++----------------------+       |
+                               |
+                               v
+                  +-------------------------------+
+                  |        fato_transacao         |
+                  +-------------------------------+
+                  | id_transacao (PK)             |
+                  | id_data (FK)                  |
+                  | id_titular (FK)               |
+                  | id_categoria (FK)             |
+                  | id_estabelecimento (FK)       |
+                  | valor_brl                     |
+                  | valor_usd                     |
+                  | cotacao                       |
+                  | parcela_texto                 |
+                  | num_parcela                   |
+                  | total_parcelas                |
+                  +-------------------------------+
+                               ^
+                               |
+                               |
+                    +--------------------------+
+                    |   dim_estabelecimento    |
+                    +--------------------------+
+                    | id_estabelecimento (PK)  |
+                    | nome_estabelecimento     |
+                    +--------------------------+
 
-**dim_data**
-
-* data, dia, mes, ano, trimestre, dia_semana
-
-**dim_titular**
-
-* nome_titular, final_cartao
-
-**dim_categoria**
-
-* nome_categoria
-
-**dim_estabelecimento**
-
-* nome_estabelecimento
-
----
 
 ## Consultas Analíticas
 
