@@ -38,9 +38,6 @@ O pipeline de dados foi implementado em Python utilizando as bibliotecas `pandas
 O Data Warehouse foi modelado utilizando o padrão dimensional:
 
 
-Se quiser uma versão ainda mais simples, em ASCII, para caso o Mermaid não renderize no seu README, use esta:
-
-```markdown
 ## Modelagem – Star Schema
 
 ```text
